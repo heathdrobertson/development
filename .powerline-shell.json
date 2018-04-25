@@ -1,0 +1,16 @@
+{
+    "cwd": {
+        "max_depth": 4
+    },
+    "segments": [
+        "virtual_env",
+        "username",
+        "hostname",
+        "ssh",
+        "cwd",
+        "git",
+        "root"
+    ],
+    "theme": "default",
+    "mode": "patched"
+}
