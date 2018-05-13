@@ -7,3 +7,4 @@ pandas
 scipy
 sympy
 neovim
+redis

@@ -5,7 +5,7 @@
 " - For Vim: ~.vim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
 " - Reload .vimrc and :PlugInstall to install plugins.
-call plug#begin('$HOME/.local/share/nvim/plugged')
+call plug#begin('~/.local/share/nvim/plugged')
 
 " Make sure you use single quotes
 
@@ -51,15 +51,15 @@ Plug 'tomlion/vim-solidity'
 " Initialize plugin system
 call plug#end()
 
-set clipboard+=unnamedplus
-
-let g:python3_host_prog = "/usr/bin/python3"
+let g:python3_host_prog = "/Library/Frameworks/Python.framework/Versions/3.6/bin/python3"
 
 autocmd vimenter * NERDTree
 " NerdTree Toggle
 map <C-n> :NERDTreeToggle<CR>
-:imap ;; <Esc>
+:imap <C-j> <Esc>
 
+" Typscript
+set ff=unix
 " Fullstack Python Vimrc File
 " https://www.fullstackpython.com/vim.html
 " enable syntax highlighting

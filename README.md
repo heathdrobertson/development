@@ -1,4 +1,4 @@
 # Development
-Building a development environment using a Docker image.   NeoVim, Powerline, Python3.6 e.t.c
+An image to build a development environment using; Python3.6, Redis, NeoVim, Powerline, e.t.c
 
 ## Setup instructions and cheat sheet coming soon.
