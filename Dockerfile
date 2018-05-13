@@ -26,6 +26,7 @@ RUN apt-get update && apt-get install -y \
     git \
     fonts-powerline \
     ruby-full \
+    redis-tools \
     curl 
 
 RUN curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash - && \
