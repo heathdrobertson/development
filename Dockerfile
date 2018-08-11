@@ -50,6 +50,10 @@ RUN pip2 install --upgrade \
 COPY requirements.txt ./requirements.txt
 RUN pip3 install --upgrade -r requirements.txt
 
+# Install Haskell Tool Stack
+RUN curl -sSL https://get.haskellstack.org/ | sh \
+    stack upgrade --binary
+
 # Set up my user
 RUN useradd -r codehappens --create-home --shell /bin/bash 
 
