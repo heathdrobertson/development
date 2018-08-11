@@ -66,7 +66,6 @@ RUN echo 'codehappens:newpassword' | chpasswd && adduser codehappens sudo
 USER codehappens
 
 COPY .bashrc $HOME/.bashrc
-COPY .gitconfig $HOME/.gitconfig
 
 run mkdir -p $HOME/.local/share/nvim/plugged/
 run mkdir -p $HOME/.config/nvim/
