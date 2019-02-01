@@ -1,11 +1,13 @@
-FROM ubuntu:17.10
+FROM ubuntu:latest
 
 ENV DEBIAN_FRONTEND noninteractive
 
+LABEL maintainer="Heath Robertson <CodeHappens@ToiletHill.io>"
+LABEL description="A Docker Image for a Development environment."
+
 RUN apt-get update && apt-get install -y \
     software-properties-common \
-    libreadline6 \
-    libreadline6-dev
+    libreadline7-dbg
 
 RUN add-apt-repository ppa:neovim-ppa/stable
 
@@ -19,6 +21,9 @@ RUN apt-get update && apt-get install -y \
     python3.6-dev \
     python3-pip \
     python3.6-venv \
+    libgtk2.0-dev \
+    libsm6 \
+    libxext6 \
     vim \
     neovim \
     python-neovim \
@@ -26,7 +31,8 @@ RUN apt-get update && apt-get install -y \
     git \
     fonts-powerline \
     ruby-full \
-    redis-tools \
+    graphviz \
+    haskell-platform \
     curl 
 
 RUN curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash - && \
@@ -46,6 +52,8 @@ RUN pip2 install --upgrade \
     powerline-shell \
     prompt-toolkit
 
+RUN pip install --upgrade numpy
+
 # This works also: pip --no-cache-dir install numpy scipy matplotlib ipython jupyter pandas sympy nose
 COPY requirements.txt ./requirements.txt
 RUN pip3 install --upgrade -r requirements.txt
@@ -57,15 +65,14 @@ RUN curl -sSL https://get.haskellstack.org/ | sh
 RUN useradd -r codehappens --create-home --shell /bin/bash 
 
 WORKDIR /home/codehappens
-ENV HOME /home/codehappens
 
-VOLUME ["/home/codehappens/development"]
+VOLUME ["/home/codehappens/ToiletHill"]
 
 RUN echo 'codehappens:newpassword' | chpasswd && adduser codehappens sudo 
 
 USER codehappens
 
-COPY .bashrc $HOME/.bashrc
+COPY bashrc $HOME/.bashrc
 
 run mkdir -p $HOME/.local/share/nvim/plugged/
 run mkdir -p $HOME/.config/nvim/
@@ -75,7 +82,8 @@ RUN nvim +PlugInstall +qa
 RUN curl -fLo $HOME/.config/fontconfig/conf.d --create-dirs https://raw.githubusercontent.com/powerline/fonts/master/fontconfig/50-enable-terminess-powerline.conf 
 COPY .powerline-shell.json $HOME/.powerline-shell.json
 
-EXPOSE 8080
+ENV HOME /home/codehappens
+EXPOSE 7070
 
 # RESOURCES
 # https://docs.google.com/document/d/1UlgJYoMNQvkE_TWeEbu4CYZrKd_NQWbDWroVqm_nwkg/edit?usp=sharing

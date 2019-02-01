@@ -29,10 +29,21 @@ Plug 'airblade/vim-gitgutter', {'type': 'opt'}
 
 " python
 Plug 'zchee/deoplete-jedi'
-Plug 'shougo/deoplete.nvim'
 Plug 'nvie/vim-flake8'
 Plug 'sbdchd/neoformat'
 Plug 'mindriot101/vim-yapf'
+
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+let g:deoplete#enable_at_startup = 1
+
+" haskell
+Plug 'neovimhaskell/haskell-vim'
 
 augroup fmt
   autocmd!
@@ -51,7 +62,7 @@ Plug 'tomlion/vim-solidity'
 " Initialize plugin system
 call plug#end()
 
-let g:python3_host_prog = "/Library/Frameworks/Python.framework/Versions/3.6/bin/python3"
+let g:python3_host_prog = "/usr/bin/python3.6"
 
 autocmd vimenter * NERDTree
 " NerdTree Toggle
@@ -147,3 +158,16 @@ let g:airline_symbols.maxlinenr = ''
 :nmap <F8> :setlocal spell spelllang=en_us<CR>
 :nmap <F9> :set nospell<CR>
 :nmap <F7> :echo 'Hi Heath'<CR>
+
+let g:haskell_classic_highlighting = 1
+let g:haskell_indent_if = 3
+let g:haskell_indent_case = 2
+let g:haskell_indent_let = 4
+let g:haskell_indent_where = 6
+let g:haskell_indent_before_where = 2
+let g:haskell_indent_after_bare_where = 2
+let g:haskell_indent_do = 3
+let g:haskell_indent_in = 1
+let g:haskell_indent_guard = 2
+let g:haskell_indent_case_alternative = 1
+let g:cabal_indent_section = 2
