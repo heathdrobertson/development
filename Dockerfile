@@ -46,44 +46,42 @@ RUN python2.7 -m pip install pip --upgrade && \
     python3.6 -m pip install pip --upgrade && \
     python3.6 -m pip install wheel
 
-RUN pip2 install --upgrade \
+RUN pip2 install --upgrade --no-cache-dir \
     powerline-status \
     powerline-gitstatus \
     powerline-shell \
     prompt-toolkit
 
-RUN pip install --upgrade numpy
+RUN pip install --upgrade --no-cache-dir numpy
 
 # This works also: pip --no-cache-dir install numpy scipy matplotlib ipython jupyter pandas sympy nose
 COPY requirements.txt ./requirements.txt
-RUN pip3 install --upgrade -r requirements.txt
+RUN pip3 install --upgrade --no-cache-dir -r requirements.txt
 
-# Install Haskell Tool Stack
-RUN curl -sSL https://get.haskellstack.org/ | sh 
 
-# Set up my user
-RUN useradd -r codehappens --create-home --shell /bin/bash 
+RUN echo "$HOME before user setup"
 
-WORKDIR /home/codehappens
+ARG user=generic
+ARG password=123abc
 
-VOLUME ["/home/codehappens/ToiletHill"]
-
-RUN echo 'codehappens:newpassword' | chpasswd && adduser codehappens sudo 
-
-USER codehappens
+RUN useradd -r $user --password=$password --user-group --create-home  --shell /bin/bash
+USER $user
+ENV HOME /home/$user/
+WORKDIR $HOME
+RUN echo "$HOME after user setup"
 
 COPY bashrc $HOME/.bashrc
-
-run mkdir -p $HOME/.local/share/nvim/plugged/
-run mkdir -p $HOME/.config/nvim/
+RUN echo "$HOME after bashrc copy"
+run mkdir -p $HOME/.local/share/nvim/plugged/ && mkdir -p $HOME/.config/nvim/
 COPY init.vim $HOME/.config/nvim/init.vim
 RUN curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 RUN nvim +PlugInstall +qa
 RUN curl -fLo $HOME/.config/fontconfig/conf.d --create-dirs https://raw.githubusercontent.com/powerline/fonts/master/fontconfig/50-enable-terminess-powerline.conf 
-COPY .powerline-shell.json $HOME/.powerline-shell.json
+COPY powerline-shell.json $HOME/.powerline-shell.json
 
-ENV HOME /home/codehappens
-EXPOSE 7070
+ENV HOME /home/$user
+VOLUME ["/home/$user/ToiletHill"]
+EXPOSE 8080
 
 # RESOURCES
 # https://docs.google.com/document/d/1UlgJYoMNQvkE_TWeEbu4CYZrKd_NQWbDWroVqm_nwkg/edit?usp=sharing
