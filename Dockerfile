@@ -58,9 +58,6 @@ RUN pip install --upgrade --no-cache-dir numpy
 COPY requirements.txt ./requirements.txt
 RUN pip3 install --upgrade --no-cache-dir -r requirements.txt
 
-
-RUN echo "$HOME before user setup"
-
 ARG user=generic
 ARG password=123abc
 
@@ -68,10 +65,8 @@ RUN useradd -r $user --password=$password --user-group --create-home  --shell /b
 USER $user
 ENV HOME /home/$user/
 WORKDIR $HOME
-RUN echo "$HOME after user setup"
 
 COPY bashrc $HOME/.bashrc
-RUN echo "$HOME after bashrc copy"
 run mkdir -p $HOME/.local/share/nvim/plugged/ && mkdir -p $HOME/.config/nvim/
 COPY init.vim $HOME/.config/nvim/init.vim
 RUN curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
