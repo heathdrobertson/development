@@ -74,7 +74,7 @@ RUN nvim +PlugInstall +qa
 RUN curl -fLo $HOME/.config/fontconfig/conf.d --create-dirs https://raw.githubusercontent.com/powerline/fonts/master/fontconfig/50-enable-terminess-powerline.conf 
 COPY powerline-shell.json $HOME/.powerline-shell.json
 
-ENV HOME /home/$user
+ENV HOME /home/$user/ToiletHill
 VOLUME ["/home/$user/ToiletHill"]
 EXPOSE 8080
 
