@@ -1,5 +1,4 @@
 FROM ubuntu:latest
-
 ENV DEBIAN_FRONTEND noninteractive
 
 LABEL maintainer="Heath Robertson <CodeHappens@ToiletHill.io>"
@@ -58,25 +57,28 @@ RUN pip install --upgrade --no-cache-dir numpy
 COPY requirements.txt ./requirements.txt
 RUN pip3 install --upgrade --no-cache-dir -r requirements.txt
 
-ARG user=generic
-ARG password=123abc
+ARG USER=genericuser
+ARG USER_ID=1000
+ARG USER_GID=1000
 
-RUN useradd -r $user --password=$password --user-group --create-home  --shell /bin/bash
-USER $user
-ENV HOME /home/$user/
+RUN groupadd -f --gid $USER_GID $USER
+RUN useradd --uid $USER_ID --gid $USER_GID --create-home --shell /bin/bash $USER
+
+USER $USER:$USER_GID
+ENV HOME /home/$USER
+
 WORKDIR $HOME
 
 COPY bashrc $HOME/.bashrc
-run mkdir -p $HOME/.local/share/nvim/plugged/ && mkdir -p $HOME/.config/nvim/
+RUN mkdir -p $HOME/.local/share/nvim/plugged/ && mkdir -p $HOME/.config/nvim/
 COPY init.vim $HOME/.config/nvim/init.vim
 RUN curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 RUN nvim +PlugInstall +qa
 RUN curl -fLo $HOME/.config/fontconfig/conf.d --create-dirs https://raw.githubusercontent.com/powerline/fonts/master/fontconfig/50-enable-terminess-powerline.conf 
 COPY powerline-shell.json $HOME/.powerline-shell.json
 
-ENV HOME /home/$user/ToiletHill
-VOLUME ["/home/$user/ToiletHill"]
 EXPOSE 8080
+VOLUME ["$HOME/codehappens"]
 
 # RESOURCES
 # https://docs.google.com/document/d/1UlgJYoMNQvkE_TWeEbu4CYZrKd_NQWbDWroVqm_nwkg/edit?usp=sharing
