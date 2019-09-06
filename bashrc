@@ -25,14 +25,13 @@ echo -e "\e[1;31m"
 cat<<TF
 
 
-______________________________________________________________________________________________________
+CodeHappens@ToiletHill.io _______________________________________________________________
 
- _______  _____  _____        _______ _______ _     _ _____                    ______  _______ _    _
-    |    |     |   |   |      |______    |    |_____|   |   |      |           |     \ |______  \  / 
-    |    |_____| __|__ |_____ |______    |    |     | __|__ |_____ |_____      |_____/ |______   \/  
-    
-______________________________________________________________________________________________________
-                                                                                                     
+ _______  _____  _____        _______ _______ _     _ _____                 _____  _____ 
+    |    |     |   |   |      |______    |    |_____|   |   |      |          |   |     |
+    |    |_____| __|__ |_____ |______    |    |     | __|__ |_____ |_____ . __|__ |_____|
+                                                                                         
+______________________________________________________________________________ Development                                                                                                     
                                        
                                        
 
@@ -41,21 +40,20 @@ echo -e "\e[0;33m"
 
 if [[ $EUID -eq 0 ]]; then
   cat <<WARN
-WARNING: You are running this container as root, which can cause new files in
-mounted volumes to be created as the root user on your host machine.
+$ docker run -u \$(id -u):\$(id -g) args...
+
+WARNING: You are running this container as $(id -un), if this is root it can cause new files in mounted volumes to be created as the root user on your host machine.
 
 To avoid this, run the container by specifying your user's userid:
 
-$ docker run -u \$(id -u):\$(id -g) args...
 WARN
 else
   cat <<EXPL
-You are running this container as user with ID $(id -u) and group $(id -g),
-which should map to the ID and group for your user on the Docker host. Great!
+You are running this container as user with ID $(id -u) and group $(id -g), which should map to the ID and group for your user on the Docker host. Great!
 EXPL
 fi
 
-# Turn off colors
+# Turn off color
 echo -e "\e[m"
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
