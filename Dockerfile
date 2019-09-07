@@ -2,7 +2,7 @@ FROM ubuntu:latest
 ENV DEBIAN_FRONTEND noninteractive
 
 LABEL maintainer="Heath Robertson <CodeHappens@ToiletHill.io>"
-LABEL description="A Docker Image for a Development environment."
+LABEL description="A Docker Image for a Development environment IDE NeoVim."
 
 RUN apt-get update && apt-get install -y \
     software-properties-common \
@@ -16,10 +16,10 @@ RUN apt-get update && apt-get install -y \
     python-pip \
     python-dev \
     build-essential \
-    python3.6 \
-    python3.6-dev \
+    python3.7 \
+    python3.7-dev \
     python3-pip \
-    python3.6-venv \
+    python3.7-venv \
     libgtk2.0-dev \
     libsm6 \
     libxext6 \
@@ -42,8 +42,8 @@ RUN curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash - && \
 # update pip
 RUN python2.7 -m pip install pip --upgrade && \
     python2.7 -m pip install wheel && \
-    python3.6 -m pip install pip --upgrade && \
-    python3.6 -m pip install wheel
+    python3.7 -m pip install pip --upgrade && \
+    python3.7 -m pip install wheel
 
 RUN pip2 install --upgrade --no-cache-dir \
     powerline-status \
