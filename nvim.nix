@@ -55,11 +55,12 @@ stdenv.mkDerivation rec {
     solc
     python37
     python37.pkgs.pip
-    python37.pkgs.msgpack-python
+    python37.pkgs.msgpack
     python37.pkgs.jedi
     python37.pkgs.pynvim
     python37.pkgs.pyopenssl
     powerline-fonts
+    xclip
     myNeovim
   ];
   shellHook = ''
