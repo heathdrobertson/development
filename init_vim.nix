@@ -20,7 +20,6 @@
     Plug 'scrooloose/nerdtree'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
-    " Plug 'roxma/nvim-completion-manager'
     Plug 'Chiel92/vim-autoformat'
 
     " git
@@ -66,8 +65,6 @@
     " Nix Expressions
     Plug 'LnL7/vim-nix'
     
-    " Rust
-    let g:deoplete#sources#rust#rust_source_path='/nix/store/kx7xw2fhvgf77swzmpmc7israhrkidy9-rustup-1.19.0/bin/rustup'
 
     " Ethereum Solidity
     Plug 'tomlion/vim-solidity'
@@ -77,13 +74,18 @@
 
     let g:python3_host_prog="/nix/store/swy0p01xr0wyh907d67hkxr1g0kngcpn-python3-3.7.4/bin/python"
 
-
     autocmd vimenter * NERDTree
     " NerdTree Toggle
     map <C-n> :NERDTreeToggle<CR>
     :imap <C-j> <Esc>
     " enable line numbers
     let NERDTreeShowLineNumbers=1
+
+    " Use deoplete.
+    let g:deoplete#enable_at_startup = 1
+
+    " Whether to include documentation strings (if found) in the result data.
+    let g:deoplete#sources#ternjs#docs = 1
 
     " neosnippet
     let g:neosnippet#enable_completed_snippet = 1
@@ -98,13 +100,14 @@
 
     " Typscript
     set ff=unix
-    " Fullstack Python Vimrc File
-    " https://www.fullstackpython.com/vim.html
+
+    " Rust
+    let g:deoplete#sources#rust#rust_source_path='/nix/store/kx7xw2fhvgf77swzmpmc7israhrkidy9-rustup-1.19.0/bin/rustup'
+
+    " Fullstack Python Vimrc File https://www.fullstackpython.com/vim.html
+
     " enable syntax highlighting
     syntax enable
-
-  " Whether to include documentation strings (if found) in the result data.
-  let g:deoplete#sources#ternjs#docs = 1
 
     " show line numbers
     set number

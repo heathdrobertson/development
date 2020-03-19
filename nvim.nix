@@ -13,11 +13,8 @@ with import <nixpkgs> {
           plug.plugins = with pkgs.vimPlugins; [
             vim-easy-align
             nerdtree
-            nerdtree-git-plugin
-            vim-nerdtree-tabs
             vim-airline
             vim-airline-themes
-            nvim-completion-manager
             vim-autoformat
             vim-fugitive
             vim-gitgutter
@@ -55,6 +52,7 @@ stdenv.mkDerivation rec {
     nodejs
     ghc
     cabal-install
+    solc
     python37
     python37.pkgs.pip
     python37.pkgs.msgpack-python
