@@ -9,8 +9,13 @@ docker run --volumes-from=nix -it -v $(pwd):/app -w /app --name neovim nixos/nix
 - The `nix` data container is used to shared persistent /nix for all Nix containers.
 - Creates a volume wich mounts the current working directory to the `/app` directory in the container.
 
+NOTES
+---
+- F3 Key Runs Autoformat on selected range of lines.
+- Gitgutter shows changes on left gutter of open file. + = new, - = modified.
+
 LINKS
-____
+---
 
 - [ToiletHill.io]  Additional Notes & Info
 - [NixOS]

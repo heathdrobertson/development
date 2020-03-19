@@ -11,28 +11,24 @@ with import <nixpkgs> {
           customRC = init_vim.config;
 
           plug.plugins = with pkgs.vimPlugins; [
-            vim-easy-align
             nerdtree
             vim-airline
             vim-airline-themes
             vim-autoformat
-            vim-fugitive
-            vim-gitgutter
-            deoplete-nvim
-            deoplete-jedi
-            deoplete-ternjs
-            deoplete-rust
-            nvim-yarp
-            vim-flake8
-            neoformat
-            vim-yapf
             auto-pairs
+            youcompleteme
+            vim-gitgutter
+            haskell-vim
+            neco-ghc
+            rust-vim
+            auto-pairs
+            vim-flake8
+            vim-yapf
             vim-surround
             vim-jsbeautify
             typescript-vim
             vim-nix
             vim-solidity
-            jedi-vim
           ];
 
         }; 
@@ -41,6 +37,16 @@ with import <nixpkgs> {
   };
 };
 
+let
+  pythonEnv = python37.withPackages (ps: [
+    ps.setuptools
+    ps.pip
+    ps.pyyaml
+    ps.pynvim
+    ps.msgpack
+    ps.pyopenssl
+  ]);
+in
 stdenv.mkDerivation rec {
   name = "neovim";
 
@@ -53,17 +59,17 @@ stdenv.mkDerivation rec {
     ghc
     cabal-install
     solc
-    python37
-    python37.pkgs.pip
-    python37.pkgs.msgpack
-    python37.pkgs.jedi
-    python37.pkgs.pynvim
-    python37.pkgs.pyopenssl
+    pythonEnv
     powerline-fonts
+    ruby
     xclip
+    locale
     myNeovim
   ];
   shellHook = ''
-    nvim +PlugInstall +qa
+    export LANG=UTF-8
+    # Set DISPALY env for xclip
+    export DISPLAY=:0.1
+    npm install -g neovim
   '';
 }
